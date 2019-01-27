@@ -92,9 +92,9 @@ public class EC2Controller {
 		Instances instance = instanceService.getInstanceByname(n);
 		
 
-		model.addAttribute("instance", instanceService.getInstanceByname(n));
+		model.addAttribute("instances", instanceService.getInstanceByname(n));
 		
-		return "user_management";
+		return "view";
 		
 	}
 	

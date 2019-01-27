@@ -23,7 +23,9 @@ public class BaseLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private String type;
 	private String state;
 	private String az;
-	private String ip;
+	private String publicIP;
+	private String privateIP;
+	
 	
 	private static final Logger log = Logger.getLogger(BaseLoader.class);
 

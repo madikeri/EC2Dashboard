@@ -53,40 +53,47 @@ div.container {
 
 <script type="text/javascript" th:src="@{/js/src/navigation.js}"></script>
 <script type="text/javascript" th:src="@{../js/lib/node_modules/chart.js/dist/Chart.bundle.js}"></script>
-<div th:replace="fragments/navbar :: header" th:text="${username}"></div>
-<div id ="agentInfo" th:value="${role}"></div>
 
-<div class="tab-pane fade in active" id="tab5default">
-	<table id="myCreTable" class="row-border dataTable no-footer" role="grid" aria-describedby="creTable_info">
+<div id ="instanceInfo" th:value="${instance}"></div>
+
+<div class="tab-pane fade in active" id="tabdefault">
+	<table id="EC2Table" class="row-border dataTable no-footer" role="grid" aria-describedby="Table_info">
 		<thead>
 			<tr>
+				<th>EC2 Name</th>
 				<th>ID</th>
-				<th>Traveler</th>
-				<th>PNR</th>
-				<th>Department</th>
-				<th>Account Id</th>
-				<th>Date Entered</th>
-				<th>Agent</th>
-				<th>Contest</th>
-				<th>CRM #</th>
-				<th>Savings Total</th>	
+				<th>Type</th>
+				<th>State</th>
+				<th>az Id</th>
+				<th>publicIP</th>
+				<th>privateIP</th>
 			</tr>
 		</thead>
 		<tr class="odd"><td valign="top" colspan="15" class="dataTables_empty">No data available in table</td></tr>
 	</table>
-	<div class="text-center">
-		<button id = "myCREViewButton" type="button" class="btn btn-primary">View</button>
-	</div>	
+
 </div>
 											
 											
 <script>
 /*<![CDATA[*/											
-											
-//Creates same grid for CRE's, as long as you pass the correct endpoint and the ID you wish to Create datatables with.
-function myCreTableData(url,tableID){
-	console.log(url);
-	console.log("my cre table");
+			
+
+$(document).ready(function() {
+	$(".js-example-basic-single").select2();
+	$(".js-example-basic-multiple").select2();
+	
+
+	myTableData();
+	
+}); // end document.ready											
+//Creates grid for instances, as long as you pass the correct endpoint and the ID you wish to Create datatables with.
+function myTableData(){
+
+	var instances = "${instances}" ;
+	
+	console.log("my  table");
+	console.log("instances:" + instances);
 		var html = "";
 		$.ajax({
 			dataType: 'json',
