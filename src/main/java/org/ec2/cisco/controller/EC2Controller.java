@@ -74,6 +74,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 
+import org.ec2.cisco.model.*;
 
 
 @Controller
@@ -83,82 +84,19 @@ public class EC2Controller {
 	private InstancesService instanceService;
 	
 	
-	//opens list of instances with details using data tables 
-	@RequestMapping("/instance/manage")
-	public String instanceManage(ModelMap model, Principal principal) {
-		
+	@RequestMapping(value = "/listEC2/", method = RequestMethod.GET, produces = "application/json")
+	
+	public String instanceResults(ModelMap model, Principal principal) {
+			
 		String n = principal.getName().toString();
-		model.addAttribute("username", n);
-		Instances instance = instanceService.getInstanceById(principal.get) .getAgentByUsername(n);
-		model.addAttribute("role", agent.getRole());
+		Instances instance = instanceService.getInstanceByname(n);
 		
-		Agent updatingAgent = agentService.getAgentByUsername(n);
-		
-		if ((updatingAgent.getRole().getRole_id() == 3)) {
-			model.addAttribute("edit", true);
-		}
-		else{
-			model.addAttribute("edit", false);
-		}
 
-		List<Department> depts = Lists.newArrayList(departmentService.listAllDepartment());
-		if (depts.size() > 0) {
-			Collections.sort(depts, new Comparator<Department>() {
-				@Override
-				public int compare(final Department object1, final Department object2) {
-					return object1.getName().compareTo(object2.getName());
-				}
-			});
-		}
-
-
-		model.addAttribute("agents", agentService.listAgentsForMenu());
+		model.addAttribute("instance", instanceService.getInstanceByname(n));
 		
 		return "user_management";
+		
 	}
-	
-	
-	@RequestMapping("/instance/view")
-	public String instanceView(ModelMap model, Principal principal) {
-	
-		String n = principal.getName().toString();
-		model.addAttribute("username", n);
-		Agent agent = agentService.getAgentByUsername(n);
-		
-
-		model.addAttribute("role", agent.getRole());
-		
-		
-		Agent updatingAgent = agentService.getAgentByUsername(n);
-		
-		if ((updatingAgent.getRole().getRole_id() == 3)) {
-			model.addAttribute("edit", true);
-		}
-		else{
-			model.addAttribute("edit", false);
-		}
-		List<Department> depts = Lists.newArrayList(departmentService.listAllDepartment());
-		
-		
-		/*
-		if (depts.size() > 0) {
-			Collections.sort(depts, new Comparator<Department>() {
-				@Override
-				public int compare(final Department object1, final Department object2) {
-					return object1.getName().compareTo(object2.getName());
-				}
-			});
-		}
-		*/
-		model.addAttribute("roles", roleService.listAllRole());
-		model.addAttribute("departments", depts);
-
-		model.addAttribute("agents", agentService.listAgentsForMenu());
-		log.debug("returning user_add");
-		return "user_add";
-	}
-	
-	
 	
 	
 	

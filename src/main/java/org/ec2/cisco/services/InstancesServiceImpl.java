@@ -41,5 +41,10 @@ public class InstancesServiceImpl implements InstancesService{
 		return instances;
 
 	}
+
+	public Instances getInstanceByname(String name) {
+		return customDoa.retrieveInstancebyname(name);
+		
+	}
 	
 }

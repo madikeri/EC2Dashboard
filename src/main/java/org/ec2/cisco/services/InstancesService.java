@@ -12,6 +12,7 @@ public interface InstancesService {
         
     List<Instances> listInstancessForMenu();
     
-    
+    Instances getInstanceByname(String name);
+
 
 }

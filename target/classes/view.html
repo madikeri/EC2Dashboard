@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="../static/css/nti.css" type="text/css"	
+	th:href="@{/css/nti.css}" rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/js/lib/jquery/jquery-3.1.1.js}"></script>
+<script type="text/javascript"
+	th:src="@{/js/lib/bootstrap/js/bootstrap.js}"></script>
+<link type="text/css"
+	th:href="@{/js/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/js/lib/select2/js/select2.min.js}"></script>
+<link type="text/css" th:href="@{/js/lib/select2/css/select2.min.css}"
+	rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/js/lib/datatable/jquery.dataTables.js}"></script>
+<script type="text/javascript"
+	th:src="@{/js/lib/datatable/dataTables.bootstrap.js}"></script>
+<link href="../static/js/lib/datatable/jquery.dataTables.css"
+	type="text/css" th:href="@{/js/lib/datatable/jquery.dataTables.css}"
+	rel="stylesheet" />
+<link href="../static/js/lib/datatable/dataTables.bootstrap.css"
+	type="text/css" th:href="@{/js/lib/datatable/dataTables.bootstrap.css}"
+	rel="stylesheet" />
+<!--  Data Range Selector -->
+<script type="text/javascript" th:src="@{/js/lib/moment/moment.js}"></script>
+
+<script type="text/javascript"
+	th:src="@{/js/lib/daterangepicker/js/daterangepicker.js}"></script>
+<link href="../static/js/lib/datatable/css/daterangepicker.css"
+	type="text/css"
+	th:href="@{/js/lib/daterangepicker/css/daterangepicker.css}"
+	rel="stylesheet" />
+<!-- 	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.1/css/buttons.dataTables.min.css"/> -->
+	<link type="text/css" th:href="@{/js/lib/datatable/buttons.dataTables.min.css}" rel="stylesheet" />
+<!-- <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/dataTables.buttons.min.js"></script> -->
+<script type="text/javascript"
+	th:src="@{/js/lib/datatable/dataTables.buttons.min.js}"></script>
+	<script type="text/javascript"
+	th:src="@{/js/lib/datatable/buttons.html5.min.js}"></script>
+		<script type="text/javascript"
+	th:src="@{/js/lib/datatable/buttons.print.min.js}"></script>
+<!-- <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.print.min.js"></script> -->
+<style>
+.tableCustom th, .tableCustom td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+div.container {
+        width: 80% !important;
+    }
+</style>
+
+<script type="text/javascript" th:src="@{/js/src/navigation.js}"></script>
+<script type="text/javascript" th:src="@{../js/lib/node_modules/chart.js/dist/Chart.bundle.js}"></script>
+<div th:replace="fragments/navbar :: header" th:text="${username}"></div>
+<div id ="agentInfo" th:value="${role}"></div>
+
+<div class="tab-pane fade in active" id="tab5default">
+	<table id="myCreTable" class="row-border dataTable no-footer" role="grid" aria-describedby="creTable_info">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Traveler</th>
+				<th>PNR</th>
+				<th>Department</th>
+				<th>Account Id</th>
+				<th>Date Entered</th>
+				<th>Agent</th>
+				<th>Contest</th>
+				<th>CRM #</th>
+				<th>Savings Total</th>	
+			</tr>
+		</thead>
+		<tr class="odd"><td valign="top" colspan="15" class="dataTables_empty">No data available in table</td></tr>
+	</table>
+	<div class="text-center">
+		<button id = "myCREViewButton" type="button" class="btn btn-primary">View</button>
+	</div>	
+</div>
+											
+											
+<script>
+/*<![CDATA[*/											
+											
+//Creates same grid for CRE's, as long as you pass the correct endpoint and the ID you wish to Create datatables with.
+function myCreTableData(url,tableID){
+	console.log(url);
+	console.log("my cre table");
+		var html = "";
+		$.ajax({
+			dataType: 'json',
+			url: url,
+			type: "GET",
+			contentType: "application/json;charset=utf-8",
+			success: function(data){
+				console.log("null");
+				if(data === "null" || data.length === 0){
+					console.log("here");
+					$('#' + tableID).DataTable({
+						searching:false
+					});
+				}
+				
+					
+				console.log(data.length);
+				console.log("DATA: " + JSON.stringify(data));
+				html += "<tbody>";
+				$.each( data, function( key, value ) {
+					console.log("KEY: " + key);
+					console.log("VALUE: " + value);
+					var dateTest = new Date(data[key].date_created);
+					var DateFormat = newDateFormat(dateTest);
+					
+					//console.log(fullDate);
+					console.log("datetest: " + dateTest);
+					
+					  html +="<tr>" +
+					   "<td>"+data[key].cre_id +"</td>"+
+							"<td>"+data[key].traveler_name+"</td>"+
+							"<td>"+data[key].pnr +"</td>"+
+							"<td>"+data[key].dept_name+"</td>"+
+					  		"<td>"+data[key].account_name+"</td>";
+							console.log("cont");
+					  html+="<td>"+DateFormat+"</td>"+
+							"<td>"+data[key].other_agent+"</td>"+
+							"<td>"+data[key].contest+"</td>"+
+							"<td>"+data[key].crm_id+"</td>"+
+							"<td>"+data[key].value+"</td>";
+						html+="</tr>";
+
+				});
+				html += "</tbody>";
+				if ($('#' + tableID + ' tbody').length == 1 && data.length != 0)
+				{
+					$('#' + tableID + ' tbody')[0].remove();
+				}
+				$('#' + tableID).append(html);
+
+				var table = $('#' + tableID).DataTable({
+					select:true,
+					searching:false
+					//select:true
+				});
+			    $('#' + tableID + ' tbody').on( 'click', 'tr', function () {
+			        if ( $(this).hasClass('selected') ) {
+			            $(this).removeClass('selected');
+			        }
+			        else {
+			            table.$('tr.selected').removeClass('selected');
+			            $(this).addClass('selected');
+			            selectedrow = table.row('.selected').data();
+			            
+			           // alert(selectedrow);
+			            console.log(selectedrow[0]);
+			        }
+			    } );
+// 			    $( "#myCREViewButton" ).click(function() {
+// 			    	  alert(selectedrow[0]);
+// 			    	});
+				
+
+
+			
+			}
+		});
+	}											
+	
+/*]]>*/
+</script>
+</html>	

@@ -9,4 +9,7 @@ public interface InstancesCustomRepository {
 	
 	List<Instances> retrieveInstancessForMenus();
 
+	Instances retrieveInstancebyname(String name);
+
+
 }
