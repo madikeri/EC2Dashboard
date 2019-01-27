@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import org.ec2.cisco.dao.crudrepository.InstancesCrudRepository;
 import org.ec2.cisco.model.Instances;
+import org.ec2.cisco.model.InstancesSearchCriteria;
 import org.ec2.cisco.dao.customrepository.*;
 
 
@@ -20,7 +21,7 @@ public class InstancesServiceImpl implements InstancesService{
 	private InstancesCrudRepository doa;
 	
 	@Autowired
-	private InstancesCustomRepository customDoa;
+	private InstancesCustomRepository customDao;
 
 	
 	public Iterable<Instances> listAllInstances() {
@@ -33,6 +34,10 @@ public class InstancesServiceImpl implements InstancesService{
 
 	public Instances saveInstance(Instances instance) {
 		return doa.save(instance);
+	}
+
+	public Iterable<Instances> search(InstancesSearchCriteria instanceSearchCriteria) {
+		return customDao.searchAll(instanceSearchCriteria);
 	}
 
 	

@@ -5,6 +5,7 @@
 /Users/gayathrik/Desktop/Gayathri/Cisco Assign _2019/cisco-assign/src/main/java/org/ec2/cisco/services/InstancesService.java
 /Users/gayathrik/Desktop/Gayathri/Cisco Assign _2019/cisco-assign/src/main/java/org/ec2/cisco/model/EC2CustomSearchResult.java
 /Users/gayathrik/Desktop/Gayathri/Cisco Assign _2019/cisco-assign/src/main/java/org/ec2/cisco/bootstrap/BaseLoader.java
+/Users/gayathrik/Desktop/Gayathri/Cisco Assign _2019/cisco-assign/src/main/java/org/ec2/cisco/model/InstancesSearchCriteria.java
 /Users/gayathrik/Desktop/Gayathri/Cisco Assign _2019/cisco-assign/src/main/java/org/ec2/cisco/dao/customrepository/InstancesCustomRepository.java
 /Users/gayathrik/Desktop/Gayathri/Cisco Assign _2019/cisco-assign/src/main/java/org/ec2/cisco/model/Instances.java
 /Users/gayathrik/Desktop/Gayathri/Cisco Assign _2019/cisco-assign/src/main/java/org/ec2/cisco/services/InstancesServiceImpl.java

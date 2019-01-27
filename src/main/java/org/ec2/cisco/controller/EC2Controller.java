@@ -74,7 +74,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 
-
 import org.ec2.cisco.model.*;
 
 
@@ -108,6 +107,51 @@ public class EC2Controller {
 		return listAllInstances;
 		
 	}
+	
+	
+	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Instances> searchResults(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {			
+//		String n = principal.getName().toString();
+		
+		String searchObj = request.getParameter("searchObj");
+		//searchObj= searchObj.substring(1,searchObj.length()-1);
+		//log.debug("searchObj:"+searchObj);
+		
+		ObjectMapper mapper = new ObjectMapper();
+
+		InstancesSearchCriteria instanceSearchCriteria = mapper.readValue(searchObj, InstancesSearchCriteria.class);
+		System.out.println("name: " + instanceSearchCriteria.getName());
+		System.out.println("type: " + instanceSearchCriteria.getType());
+		
+		
+		Iterable<Instances> instanceList = instanceService.search(instanceSearchCriteria);
+		if(instanceList == null){
+			return null;
+		}
+		System.out.println("back from search:"+ instanceList.toString());
+		
+		
+		List<Instances> listAllInstances = new ArrayList();	
+		
+
+		for(Instances instance_i : instanceList){	
+			listAllInstances.add(instance_i);			
+		}
+		System.out.println("after for:");
+		
+		
+		if(listAllInstances == null || listAllInstances.isEmpty())
+		{
+			System.out.println("The List is null or there is a Error");
+			return null;
+		}
+		System.out.println("DATASET:"+ listAllInstances);
+		
+
+		return listAllInstances;
+		
+	}
+	
 	
     @RequestMapping("/listAllec2s")
 	String listEC2(ModelMap model, Principal principal) {

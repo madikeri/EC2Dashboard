@@ -2,6 +2,8 @@ package org.ec2.cisco.services;
 
 import java.util.List;
 import org.ec2.cisco.model.Instances;
+import org.ec2.cisco.model.*;
+
 
 public interface InstancesService {
     Iterable<Instances> listAllInstances();
@@ -10,7 +12,8 @@ public interface InstancesService {
 
     Instances saveInstance(Instances Instance);
         
-   
+    Iterable<Instances> search(InstancesSearchCriteria instanceSearchCriteria);
+	
 
 
 }
