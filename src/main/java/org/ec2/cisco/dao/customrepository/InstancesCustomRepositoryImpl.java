@@ -9,14 +9,17 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-
 
 import org.ec2.cisco.controller.*;
 import org.ec2.cisco.dao.crudrepository.*;
 import org.ec2.cisco.model.Instances;
-
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.apache.log4j.Logger;
 
 
@@ -28,35 +31,38 @@ public class InstancesCustomRepositoryImpl implements InstancesCustomRepository{
 	@PersistenceContext
     private EntityManager em;
 	
+	private static final Logger log = Logger.getLogger(InstancesCustomRepository.class);
+
 	@Autowired
 	InstancesCrudRepository instanceRepo;
-	
-	
-	public List<Instances> retrieveInstancessForMenus() {
-		List<Instances> instances = new ArrayList();
-		List<Object[]> objs = em.createNamedQuery("instance.findForMenus").getResultList();
-		for(Object[] o : objs){
-			Instances instance = new Instances();
-			instance.setId((String)o[0]);
-				
+
+	public List<Instances> findAll(Pageable pageable, String searchParam) {
+		log.debug("entering customdao findall");
+		Session session = (Session) em.getDelegate();
+		
+		Criteria criteria;
+		if (searchParam != null && !searchParam.equals("")) {
+			long val = Long.valueOf(searchParam);
+			criteria = session.createCriteria(Instances.class)
+					.add(Restrictions.disjunction().add(Restrictions.like("instance_id", val)));
+		} else {
+			criteria = session.createCriteria(Instances.class);
 		}
+		
+		criteria.setFirstResult((pageable.getPageNumber() - 1) * pageable.getPageSize());
+		criteria.setMaxResults(pageable.getPageSize());
+		criteria.addOrder(Order.asc("instance_id"));
+		// criteria.addOrder(Order.asc("date_closed"));
+		List<Instances> instances = criteria.list();
+		
+		log.debug("returning from customdao findall");
 		return instances;
 	}
 	
-	public Instances retrieveInstancebyname(String name) {
-		
-		List<Object[]> objs = em.createNamedQuery("instance.byName").setParameter("name", name).getResultList();
-		for(Object[] o : objs){
-			Instances instance = new Instances();
-			instance.setId((String)o[0]);
-			instance.setName((String) o[1]);
+	
 
 
-			return instanceRepo.findOne(instance.getId());	
-		}
-		return null;
-	}
-
+	
 
 
 	

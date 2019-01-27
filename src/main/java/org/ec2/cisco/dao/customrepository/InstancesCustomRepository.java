@@ -4,12 +4,16 @@ import java.util.List;
 
 
 import org.ec2.cisco.model.Instances;
+import org.springframework.data.domain.Pageable;
+
 
 public interface InstancesCustomRepository {
 	
-	List<Instances> retrieveInstancessForMenus();
+//	List<Instances> retrieveInstancessForMenus();
 
-	Instances retrieveInstancebyname(String name);
+//	Instances retrieveInstancebyname(String name);
+	
+	List<Instances> findAll(Pageable pageable,String searchParam);
 
 
 }

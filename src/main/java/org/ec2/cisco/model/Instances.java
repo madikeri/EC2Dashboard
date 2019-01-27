@@ -17,29 +17,24 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+//import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "instances")
-@NamedQueries({
-@NamedQuery(name="instances.findForMenus", query="SELECT a.id, ap.first_name,ap.last_name FROM Agent a LEFT JOIN a.person ap WHERE a.active = 1"),
-@NamedQuery(name="instances.findForMenusWithEmail", query="SELECT a.id, ap.first_name,ap.last_name, ap.email FROM Agent a LEFT JOIN a.person ap WHERE a.active = 1"),
-@NamedQuery(name="instances.findAgentPerson", query="SELECT a.id, ap.first_name,ap.last_name FROM Agent a LEFT JOIN a.person ap where a.id =:id"),
-//@NamedQuery(name="agent.byUserName", query="SELECT a.id,a.username,ar.role_id FROM Agent a  LEFT JOIN a.role ar where a.google_user_name =:username AND a.active=1"),
-@NamedQuery(name="instances.byUserName", query="SELECT a.id,a.username FROM Agent a where a.google_user_name =:username AND a.active=1"),
-})
-public class Instances implements Serializable, Comparable<Instances>{
 
-	//This is auto generated, not sure why
-	public int compareTo(Instances o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+public class Instances implements Serializable{
+
+	
+
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String id;
 	
 	private String name;
-	private String id;
+	private String instance_id;
 	private String type;
 	private String state;
 	private String az;
@@ -90,8 +85,14 @@ public class Instances implements Serializable, Comparable<Instances>{
 	}
 	@Override
 	public String toString() {
-		return "Instances [name=" + name + ", id=" + id + ", type=" + type + ", state=" + state + ", az=" + az
-				+ ", publicIP=" + publicIP + ", privateIP=" + privateIP + "]";
+		return "Instances [id=" + id + ", name=" + name + ", instance_id=" + instance_id + ", type=" + type + ", state="
+				+ state + ", az=" + az + ", publicIP=" + publicIP + ", privateIP=" + privateIP + "]";
+	}
+	public String getInstance_id() {
+		return instance_id;
+	}
+	public void setInstance_id(String instance_id) {
+		this.instance_id = instance_id;
 	}
 	
 

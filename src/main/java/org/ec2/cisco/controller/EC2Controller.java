@@ -74,6 +74,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 
+
 import org.ec2.cisco.model.*;
 
 
@@ -84,20 +85,35 @@ public class EC2Controller {
 	private InstancesService instanceService;
 	
 	
-	@RequestMapping(value = "/listEC2/", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/listAll", method = RequestMethod.GET, produces = "application/json")
 	
-	public String instanceResults(ModelMap model, Principal principal) {
+	public @ResponseBody List<Instances> instanceResults(ModelMap model, Principal principal) {
 			
-		String n = principal.getName().toString();
-		Instances instance = instanceService.getInstanceByname(n);
+//		String n = principal.getName().toString();
+		
+		List<Instances> listAllInstances = new ArrayList();	
+		Iterable<Instances> instanceList = instanceService.listAllInstances();
+		
+		for(Instances instance_i : instanceList){	
+			listAllInstances.add(instance_i);			
+		}
+		if(listAllInstances == null || listAllInstances.isEmpty())
+		{
+			System.out.println("The List is null or there is a Error");
+			return null;
+		}
+		System.out.println("DATASET:"+ listAllInstances);
 		
 
-		model.addAttribute("instances", instanceService.getInstanceByname(n));
-		
-		return "view";
+		return listAllInstances;
 		
 	}
 	
+    @RequestMapping("/listAllec2s")
+	String listEC2(ModelMap model, Principal principal) {
+    	
+    	return "view";
+    }
 	
 	
 }

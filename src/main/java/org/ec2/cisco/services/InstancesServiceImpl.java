@@ -35,16 +35,6 @@ public class InstancesServiceImpl implements InstancesService{
 		return doa.save(instance);
 	}
 
-	public List<Instances> listInstancessForMenu() {
-		List instances = customDoa.retrieveInstancessForMenus();
-		Collections.sort(instances);
-		return instances;
-
-	}
-
-	public Instances getInstanceByname(String name) {
-		return customDoa.retrieveInstancebyname(name);
-		
-	}
+	
 	
 }

@@ -10,9 +10,7 @@ public interface InstancesService {
 
     Instances saveInstance(Instances Instance);
         
-    List<Instances> listInstancessForMenu();
-    
-    Instances getInstanceByname(String name);
+   
 
 
 }

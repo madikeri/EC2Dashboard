@@ -15,7 +15,8 @@ import org.ec2.cisco.services.*;
 //name, id (e.g. a-123456abcd), type (e.g. t2.medium), state (e.g. running), az (e.g. "us-east-1b"), 
 //public IP (e.g. "54.210.167.204"), private IPs (e.g. "10.20.30.40").
 
-//@Profile("default")
+@Component
+@Profile("default")
 public class BaseLoader implements ApplicationListener<ContextRefreshedEvent> {
 //	@Autowired
 	private String name;
@@ -41,7 +42,7 @@ public class BaseLoader implements ApplicationListener<ContextRefreshedEvent> {
 		
 		Instances instance = new Instances();		
 		instance.setName("MyFirstServer");
-		instance.setId("a-123456abcd");
+		instance.setInstance_id("a-123456abcd");
 		instance.setType("t2.medium");
 		instance.setState("running");
 		instance.setAz("us-east-1b");
@@ -51,7 +52,7 @@ public class BaseLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 		instance = new Instances();		
 		instance.setName("MySecondServer");
-		instance.setId("b-123457abcd");
+		instance.setInstance_id("b-123457abcd");
 		instance.setType("t1.micro");
 		instance.setState("pending");
 		instance.setAz("us-east-1d");
@@ -61,7 +62,7 @@ public class BaseLoader implements ApplicationListener<ContextRefreshedEvent> {
 		
 		instance = new Instances();		
 		instance.setName("MythirdServer");
-		instance.setId("c-123458abcd");
+		instance.setInstance_id("c-123458abcd");
 		instance.setType("m3.large");
 		instance.setState("shutting down");
 		instance.setAz("us-east-1c");
@@ -71,7 +72,7 @@ public class BaseLoader implements ApplicationListener<ContextRefreshedEvent> {
 		
 		instance = new Instances();		
 		instance.setName("MyFourthServer");
-		instance.setId("d-123459abcd");
+		instance.setInstance_id("d-123459abcd");
 		instance.setType("r3.medium");
 		instance.setState("terminated");
 		instance.setAz("us-west-1c");
@@ -81,7 +82,7 @@ public class BaseLoader implements ApplicationListener<ContextRefreshedEvent> {
 		
 		instance = new Instances();		
 		instance.setName("MyFifthServer");
-		instance.setId("e-123461abcd");
+		instance.setInstance_id("e-123461abcd");
 		instance.setType("m3.large");
 		instance.setState("running");
 		instance.setAz("us-west-1c");
@@ -92,7 +93,7 @@ public class BaseLoader implements ApplicationListener<ContextRefreshedEvent> {
 		
 		instance = new Instances();		
 		instance.setName("MySixthServer");
-		instance.setId("f-123462abcd");
+		instance.setInstance_id("f-123462abcd");
 		instance.setType("m3.medium");
 		instance.setState("running");
 		instance.setAz("us-west-1b");
@@ -101,7 +102,7 @@ public class BaseLoader implements ApplicationListener<ContextRefreshedEvent> {
 		instanceService.saveInstance(instance);
 		
 		
-		
+		System.out.println("loading instances done");
 		
 		
 	
@@ -112,6 +113,8 @@ public class BaseLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 
 	public void onApplicationEvent(ContextRefreshedEvent arg0) {
+		log.debug("about to call loadInstances");
+		System.out.println("about to call loadInstances");
 		
 		loadInstances();
 

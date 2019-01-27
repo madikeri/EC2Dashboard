@@ -16,6 +16,8 @@
   	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		
+		<start-class>org.ec2.cisco.App</start-class>
 	</properties>
   
   	<dependencies>
@@ -28,6 +30,7 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -36,6 +39,7 @@
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -191,7 +195,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<url><![CDATA[jdbc:h2:mem:nti-portal]]></url>
+					<url><![CDATA[jdbc:h2:mem:testdb]]></url>
 					<driver>org.h2.Driver</driver>
 					<dialect>org.hibernate.dialect.H2Dialect</dialect>
 					<username>sa</username>
