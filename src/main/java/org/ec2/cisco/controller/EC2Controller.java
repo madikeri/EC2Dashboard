@@ -140,10 +140,10 @@ public class EC2Controller {
 		System.out.println("after for:");
 		
 		
-		if(listAllInstances == null || listAllInstances.isEmpty())
+		if( listAllInstances.isEmpty())
 		{
 			System.out.println("The List is null or there is a Error");
-			return null;
+			return listAllInstances;
 		}
 		System.out.println("DATASET:"+ listAllInstances);
 		
