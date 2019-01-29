@@ -1,0 +1,13 @@
+@charset "UTF-8";
+/* CSS Document */
+
+<style type="text/css">
+	@media print{
+	  body{ background-color:#FFFFFF; background-image:none; color:#000000 }
+	  #ad{ display:none;}
+	  #leftbar{ display:none;}
+	  #contentarea{ width:100%;}
+	}
+</style>
+
+}
