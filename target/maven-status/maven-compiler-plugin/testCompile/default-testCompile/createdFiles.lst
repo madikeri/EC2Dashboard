@@ -1,1 +1,5 @@
 org/ec2/cisco/AppTest.class
+org/ec2/cisco/TestEc2.class
+org/ec2/cisco/TestUtil.class
+org/ec2/cisco/IntegrationTestEc2.class
+org/ec2/cisco/TestEc2Fail.class
